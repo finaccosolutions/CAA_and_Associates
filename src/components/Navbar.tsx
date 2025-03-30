@@ -25,13 +25,15 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+      isScrolled ? 'bg-white shadow-md' : 'bg-gray-900 bg-opacity-90'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-[#4DA768]">CA A & Associates</span>
+              <span className={`text-2xl font-bold ${isScrolled ? 'text-[#4DA768]' : 'text-white'}`}>
+                CA A & Associates
+              </span>
             </Link>
           </div>
 
@@ -41,7 +43,9 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 to={item.href}
-                className="text-gray-700 hover:text-[#4DA768] relative group px-2 py-1"
+                className={`${
+                  isScrolled ? 'text-gray-700' : 'text-white'
+                } hover:text-[#4DA768] relative group px-2 py-1`}
               >
                 {item.title}
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#4DA768] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
@@ -53,7 +57,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-700 hover:text-[#4DA768]"
+              className={`${isScrolled ? 'text-gray-700' : 'text-white'} hover:text-[#4DA768]`}
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -63,7 +67,7 @@ export default function Navbar() {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white rounded-b-lg shadow-lg">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
