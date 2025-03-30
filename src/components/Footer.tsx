@@ -1,13 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { services } from '../data/services';
-import { ArrowUp, MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,16 +115,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm text-center md:text-left mb-4 md:mb-0">
+          <div className="text-center">
+            <p className="text-gray-400 text-sm">
               © {new Date().getFullYear()} CA A & Associates. All rights reserved.
             </p>
-            <button
-              onClick={scrollToTop}
-              className="bg-[#4DA768] p-2 rounded-full hover:bg-[#3d8953] transition-colors duration-300"
-            >
-              <ArrowUp size={20} />
-            </button>
           </div>
         </div>
       </div>

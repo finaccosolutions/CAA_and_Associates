@@ -2,12 +2,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { services } from '../data/services';
-import { ArrowRight, ChevronDown, Users, CheckCircle, Award, Building, Briefcase, BarChart3, PieChart, Calculator, FileText, BookOpen } from 'lucide-react';
+import { ArrowRight, ChevronDown, Users, CheckCircle, Award, Building, Briefcase, ArrowUp, BarChart3, PieChart, Calculator, BookOpen } from 'lucide-react';
 
 export default function Home() {
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services');
     servicesSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const stats = [
@@ -38,7 +42,7 @@ export default function Home() {
   ];
 
   return (
-    <div>
+    <div className="relative">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center">
         <div className="absolute inset-0">
@@ -50,16 +54,6 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#4DA768]/95 to-[#3d8953]/95"></div>
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-8"
-          >
-            <span className="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
-              Professional Financial Services
-            </span>
-          </motion.div>
           <motion.h1 
             className="text-4xl md:text-6xl font-bold mb-6 text-white"
             initial={{ opacity: 0, y: 20 }}
@@ -169,7 +163,7 @@ export default function Home() {
             </motion.p>
           </div>
 
-          <div className="space-y-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
@@ -177,42 +171,30 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`flex flex-col ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                } gap-8 items-center bg-white rounded-2xl shadow-lg overflow-hidden`}
+                className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                <div className="w-full md:w-1/2 h-[400px] relative overflow-hidden">
+                <div className="h-48 overflow-hidden">
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
-                <div className="w-full md:w-1/2 p-8 relative">
-                  <div className="absolute right-0 bottom-0 opacity-5">
-                    {index % 3 === 0 ? (
-                      <Calculator className="w-40 h-40" />
-                    ) : index % 3 === 1 ? (
-                      <FileText className="w-40 h-40" />
-                    ) : (
-                      <BookOpen className="w-40 h-40" />
-                    )}
-                  </div>
-                  <div className="relative">
-                    <div className="text-4xl mb-4">{service.icon}</div>
-                    <h3 className="text-2xl font-bold mb-4 text-gray-900">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 mb-6">
-                      {service.description}
-                    </p>
-                    <Link
-                      to={`/services/${service.id}`}
-                      className="inline-flex items-center text-[#4DA768] hover:text-[#3d8953] transition-colors duration-300"
-                    >
-                      Learn More <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                    </Link>
-                  </div>
+                <div className="p-6">
+                  <div className="text-3xl mb-3 transform group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#4DA768] transition-colors duration-300 relative">
+                    {service.title}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#4DA768] transition-all duration-300 group-hover:w-full"></span>
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-2">
+                    {service.description}
+                  </p>
+                  <Link
+                    to={`/services/${service.id}`}
+                    className="inline-flex items-center text-[#4DA768] group-hover:text-[#3d8953] transition-colors duration-300"
+                  >
+                    Learn More <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-2 transition-transform duration-300" />
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -281,6 +263,14 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Go to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className="fixed bottom-6 right-6 z-50 bg-[#4DA768] text-white p-3 rounded-full shadow-lg hover:bg-[#3d8953] transition-colors duration-300"
+      >
+        <ArrowUp size={24} />
+      </button>
     </div>
   );
 }
