@@ -2,23 +2,39 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { services } from '../data/services';
-import { ArrowRight, ArrowUp, ChevronDown, Users, CheckCircle, Award, Building } from 'lucide-react';
+import { ArrowRight, ChevronDown, Users, CheckCircle, Award, Building, Briefcase, BarChart3, PieChart, Calculator, FileText, BookOpen } from 'lucide-react';
 
 export default function Home() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services');
     servicesSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const stats = [
-    { icon: <Users className="w-8 h-8" />, number: "100K+", label: "Successful Registrations" },
-    { icon: <CheckCircle className="w-8 h-8" />, number: "50K+", label: "Satisfied Clients" },
-    { icon: <Award className="w-8 h-8" />, number: "15+", label: "Years Experience" },
-    { icon: <Building className="w-8 h-8" />, number: "5K+", label: "Business Setups" },
+    { 
+      icon: <Users className="w-8 h-8" />, 
+      number: "100K+", 
+      label: "Successful Registrations",
+      color: "from-blue-500/20 to-blue-600/20" 
+    },
+    { 
+      icon: <CheckCircle className="w-8 h-8" />, 
+      number: "50K+", 
+      label: "Satisfied Clients",
+      color: "from-green-500/20 to-green-600/20"
+    },
+    { 
+      icon: <Award className="w-8 h-8" />, 
+      number: "15+", 
+      label: "Years Experience",
+      color: "from-purple-500/20 to-purple-600/20"
+    },
+    { 
+      icon: <Building className="w-8 h-8" />, 
+      number: "5K+", 
+      label: "Business Setups",
+      color: "from-orange-500/20 to-orange-600/20"
+    },
   ];
 
   return (
@@ -76,7 +92,7 @@ export default function Home() {
               to="/services"
               className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300 inline-block"
             >
-              Our Services
+              Explore Services
             </Link>
           </motion.div>
         </div>
@@ -92,7 +108,8 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6TTI0IDQ4YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNnptMC0xMmMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6IiBzdHJva2U9IiM0REE3NjgiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=')] opacity-5"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -102,11 +119,16 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-lg p-8 text-center shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="relative group"
               >
-                <div className="text-[#4DA768] mb-4 flex justify-center">{stat.icon}</div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</h3>
-                <p className="text-gray-600">{stat.label}</p>
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${stat.color} transform group-hover:scale-105 transition-transform duration-300`}></div>
+                <div className="relative bg-white rounded-xl p-8 text-center shadow-lg transform group-hover:-translate-y-2 transition-all duration-300">
+                  <div className="text-[#4DA768] mb-4 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
+                    {stat.icon}
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</h3>
+                  <p className="text-gray-600">{stat.label}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -117,26 +139,37 @@ export default function Home() {
       <section id="services" className="py-20 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <motion.h2 
-              className="text-4xl font-bold mb-4"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
+              className="inline-flex items-center bg-[#4DA768]/10 px-4 py-2 rounded-full text-[#4DA768] font-medium mb-4"
             >
-              Our Services
-            </motion.h2>
-            <motion.p 
-              className="text-gray-600 max-w-2xl mx-auto text-lg"
+              <Briefcase className="w-5 h-5 mr-2" />
+              Our Expertise
+            </motion.div>
+            <motion.h2 
+              className="text-4xl font-bold mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Comprehensive financial solutions tailored to meet your business needs
+              Comprehensive Business Solutions
+            </motion.h2>
+            <motion.p 
+              className="text-gray-600 max-w-2xl mx-auto text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              Tailored financial services to drive your business forward
             </motion.p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <div className="space-y-16">
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
@@ -144,26 +177,40 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500"
+                className={`flex flex-col ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                } gap-8 items-center bg-white rounded-2xl shadow-lg overflow-hidden`}
               >
-                <div className="relative h-64">
+                <div className="w-full md:w-1/2 h-[400px] relative overflow-hidden">
                   <img
-                    src={`https://source.unsplash.com/featured/?${service.title.toLowerCase().replace(/&/g, 'and').split(' ').join(',')}`}
+                    src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
-                    <div className="text-3xl mb-3">{service.icon}</div>
-                    <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                    <p className="text-white/90 mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                </div>
+                <div className="w-full md:w-1/2 p-8 relative">
+                  <div className="absolute right-0 bottom-0 opacity-5">
+                    {index % 3 === 0 ? (
+                      <Calculator className="w-40 h-40" />
+                    ) : index % 3 === 1 ? (
+                      <FileText className="w-40 h-40" />
+                    ) : (
+                      <BookOpen className="w-40 h-40" />
+                    )}
+                  </div>
+                  <div className="relative">
+                    <div className="text-4xl mb-4">{service.icon}</div>
+                    <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 mb-6">
                       {service.description}
                     </p>
                     <Link
                       to={`/services/${service.id}`}
-                      className="inline-flex items-center text-white hover:text-[#4DA768] transition-colors duration-300"
+                      className="inline-flex items-center text-[#4DA768] hover:text-[#3d8953] transition-colors duration-300"
                     >
-                      Learn More <ArrowRight size={16} className="ml-2 group-hover:ml-3 transition-all duration-300" />
+                      Learn More <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </Link>
                   </div>
                 </div>
@@ -174,8 +221,16 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 bg-white px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 bg-white px-4 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 opacity-5">
+            <Award className="w-96 h-96" />
+          </div>
+          <div className="absolute bottom-0 left-0 opacity-5">
+            <Briefcase className="w-96 h-96" />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -226,14 +281,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* Scroll to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-24 right-6 z-40 bg-[#4DA768] text-white p-3 rounded-full shadow-lg hover:bg-[#3d8953] transition-all duration-300 hover:scale-110"
-      >
-        <ArrowUp size={24} />
-      </button>
     </div>
   );
 }
