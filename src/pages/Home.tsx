@@ -2,16 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { services } from '../data/services';
-import { ArrowRight, ChevronDown, Users, CheckCircle, Award, Building, Briefcase, ArrowUp, BarChart3, PieChart, Calculator, BookOpen } from 'lucide-react';
+import { ArrowRight, ChevronDown, Users, CheckCircle, Award, Building, Briefcase, BarChart3, PieChart, Calculator, BookOpen } from 'lucide-react';
 
 export default function Home() {
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services');
     servicesSection?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const stats = [
@@ -218,25 +214,32 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center max-w-4xl mx-auto"
+            className="relative"
           >
-            <h2 className="text-3xl font-bold mb-8">About CA Anwarsha Ali C</h2>
-            <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-              CA Anwarsha Ali C is a distinguished Chartered Accountant with over 15 years of experience
-              in providing comprehensive financial services. His expertise spans across taxation,
-              auditing, financial planning, and business advisory services.
-            </p>
-            <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-              Throughout his career, he has helped numerous businesses and individuals navigate complex
-              financial landscapes, ensuring compliance while optimizing their financial positions.
-              His commitment to excellence and client satisfaction has earned him a reputation as a
-              trusted financial advisor in the industry.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              With a deep understanding of both traditional and modern financial practices, CA Anwarsha
-              Ali C continues to provide innovative solutions that help clients achieve their financial
-              goals while maintaining the highest standards of professional integrity.
-            </p>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#4DA768]/10 to-[#3d8953]/10 transform -skew-y-3 rounded-3xl"></div>
+            <div className="relative bg-white p-8 md:p-12 rounded-2xl shadow-lg border-2 border-[#4DA768]/20">
+              <h2 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#4DA768] to-[#3d8953]">
+                About CA Anwarsha Ali C
+              </h2>
+              <div className="space-y-6 text-gray-600">
+                <p className="text-lg leading-relaxed">
+                  CA Anwarsha Ali C is a distinguished Chartered Accountant with over 15 years of experience
+                  in providing comprehensive financial services. His expertise spans across taxation,
+                  auditing, financial planning, and business advisory services.
+                </p>
+                <p className="text-lg leading-relaxed">
+                  Throughout his career, he has helped numerous businesses and individuals navigate complex
+                  financial landscapes, ensuring compliance while optimizing their financial positions.
+                  His commitment to excellence and client satisfaction has earned him a reputation as a
+                  trusted financial advisor in the industry.
+                </p>
+                <p className="text-lg leading-relaxed">
+                  With a deep understanding of both traditional and modern financial practices, CA Anwarsha
+                  Ali C continues to provide innovative solutions that help clients achieve their financial
+                  goals while maintaining the highest standards of professional integrity.
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -263,14 +266,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* Go to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-6 right-20 z-50 bg-[#4DA768] text-white p-3 rounded-full shadow-lg hover:bg-[#3d8953] transition-colors duration-300 hover:scale-110 transform"
-      >
-        <ArrowUp size={24} />
-      </button>
     </div>
   );
 }
