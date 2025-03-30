@@ -22,17 +22,18 @@ export default function Footer() {
               <div className="flex items-start">
                 <MapPin className="text-[#4DA768] mr-3 h-5 w-5 mt-1" />
                 <p className="text-gray-400">
-                  123 Business Street<br />
-                  City, State 12345
+                  IInd FLOOR, MALABAR ARCADE<br />
+                  NH 66, PANTHEERANKAVU<br />
+                  CALICUT
                 </p>
               </div>
               <div className="flex items-center">
                 <Phone className="text-[#4DA768] mr-3 h-5 w-5" />
-                <p className="text-gray-400">+1 (234) 567-8900</p>
+                <p className="text-gray-400">+91 9495143671</p>
               </div>
               <div className="flex items-center">
                 <Mail className="text-[#4DA768] mr-3 h-5 w-5" />
-                <p className="text-gray-400">contact@caaandassociates.com</p>
+                <p className="text-gray-400">caaassociatesca@gmail.com</p>
               </div>
             </div>
           </div>
@@ -102,15 +103,8 @@ export default function Footer() {
               <li className="flex items-center text-gray-400">
                 <Clock className="text-[#4DA768] mr-3 h-5 w-5" />
                 <div>
-                  <p className="font-semibold">Monday - Friday</p>
+                  <p className="font-semibold">Monday - Saturday</p>
                   <p>9:00 AM - 6:00 PM</p>
-                </div>
-              </li>
-              <li className="flex items-center text-gray-400">
-                <Clock className="text-[#4DA768] mr-3 h-5 w-5" />
-                <div>
-                  <p className="font-semibold">Saturday</p>
-                  <p>10:00 AM - 2:00 PM</p>
                 </div>
               </li>
               <li className="flex items-center text-gray-400">

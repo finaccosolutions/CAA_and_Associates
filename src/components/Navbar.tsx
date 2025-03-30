@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { NavItem } from '../types';
 import { Menu, X } from 'lucide-react';
 
@@ -12,26 +12,16 @@ const navItems: NavItem[] = [
 ];
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const location = useLocation();
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white shadow-md' : 'bg-gray-900 bg-opacity-90'
-    }`}>
+    <nav className="fixed w-full z-50 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className={`text-2xl font-bold ${isScrolled ? 'text-[#4DA768]' : 'text-white'}`}>
+              <span className="text-2xl font-bold text-white font-serif">
                 CA A & Associates
               </span>
             </Link>
@@ -43,12 +33,16 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`${
-                  isScrolled ? 'text-gray-700' : 'text-white'
-                } hover:text-[#4DA768] relative group px-2 py-1`}
+                className={`text-white relative group px-2 py-1 font-serif ${
+                  location.pathname === item.href 
+                    ? 'text-[#4DA768]' 
+                    : 'hover:text-[#4DA768]'
+                }`}
               >
                 {item.title}
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#4DA768] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#4DA768] transform transition-transform duration-300 ${
+                  location.pathname === item.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                }`}></span>
               </Link>
             ))}
           </div>
@@ -57,7 +51,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`${isScrolled ? 'text-gray-700' : 'text-white'} hover:text-[#4DA768]`}
+              className="text-white hover:text-[#4DA768]"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -67,12 +61,16 @@ export default function Navbar() {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white rounded-b-lg shadow-lg">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-800 rounded-b-lg">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
-                  className="block px-3 py-2 text-gray-700 hover:text-[#4DA768] hover:bg-gray-50 rounded-md"
+                  className={`block px-3 py-2 rounded-md font-serif ${
+                    location.pathname === item.href
+                      ? 'bg-[#4DA768] text-white'
+                      : 'text-white hover:bg-gray-700'
+                  }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.title}
