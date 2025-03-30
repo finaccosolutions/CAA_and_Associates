@@ -267,7 +267,7 @@ export default function Home() {
       {/* Go to Top Button */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-6 right-6 z-50 bg-[#4DA768] text-white p-3 rounded-full shadow-lg hover:bg-[#3d8953] transition-colors duration-300"
+        className="fixed bottom-6 right-20 z-50 bg-[#4DA768] text-white p-3 rounded-full shadow-lg hover:bg-[#3d8953] transition-colors duration-300 hover:scale-110 transform"
       >
         <ArrowUp size={24} />
       </button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NavItem } from '../types';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Calculator, BookOpen, Building2 } from 'lucide-react';
 
 const navItems: NavItem[] = [
   { title: 'Home', href: '/' },
@@ -20,7 +20,11 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="relative">
+                <Building2 className="h-8 w-8 text-[#4DA768]" />
+                <Calculator className="h-4 w-4 text-white absolute -bottom-1 -right-1" />
+              </div>
               <span className="text-2xl font-bold text-white font-serif">
                 CA A & Associates
               </span>
