@@ -10,7 +10,10 @@ const ServiceFeaturesComponent = lazy(() => import('../utils/serviceFeatures'));
 export default function Home() {
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services');
-    servicesSection?.scrollIntoView({ behavior: 'smooth' });
+    servicesSection?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
   const stats = [
@@ -41,7 +44,7 @@ export default function Home() {
   ];
 
   const openWhatsApp = (service: string) => {
-    const message = `Hi, I'm interested in your ${service} service. Can you provide more information?`;
+    const message = `Hello! I'm interested in your ${service} service. I would like to know more about your professional services and how you can help my business grow. Could you please provide more details about your expertise and pricing?`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/+919495143671?text=${encodedMessage}`, '_blank');
   };
@@ -66,7 +69,7 @@ export default function Home() {
               className="text-4xl md:text-6xl font-bold mb-6 text-white"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
             >
               Your Path to Financial Excellence
             </motion.h1>
@@ -74,14 +77,14 @@ export default function Home() {
               className="text-xl md:text-2xl mb-12 text-white/90"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
               Expert Financial Solutions Tailored to Your Business Success
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
               className="space-x-4"
             >
               <Link
@@ -103,7 +106,7 @@ export default function Home() {
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white hover:text-green-200 transition-colors duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.3 }}
           >
             <ChevronDown size={32} className="animate-bounce" />
           </motion.button>
@@ -119,7 +122,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  viewport={{ once: true, amount: 0.3 }}
                   className="relative group"
                 >
                   <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${stat.color} transform group-hover:scale-105 transition-transform duration-300`}></div>
@@ -137,14 +140,14 @@ export default function Home() {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-20 bg-gray-50">
+        <section id="services" className="py-20 bg-gray-50 scroll-mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
                 className="inline-flex items-center bg-[#4DA768]/10 px-4 py-2 rounded-full text-[#4DA768] font-medium mb-4"
               >
                 <Briefcase className="w-5 h-5 mr-2" />
@@ -154,8 +157,8 @@ export default function Home() {
                 className="text-4xl font-bold mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
               >
                 Comprehensive Business Solutions
               </motion.h2>
@@ -163,8 +166,8 @@ export default function Home() {
                 className="text-gray-600 max-w-2xl mx-auto text-lg"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
               >
                 Tailored financial services to drive your business forward
               </motion.p>
@@ -176,8 +179,8 @@ export default function Home() {
                   key={service.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.3 }}
+                  viewport={{ once: true, amount: 0.1 }}
                   className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="flex flex-col md:flex-row h-full">
@@ -241,10 +244,18 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
               className="relative"
             >
+              <div className="absolute inset-0 pointer-events-none">
+                <svg className="absolute right-0 top-0 w-64 h-64 text-[#4DA768]/5" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7Z" />
+                </svg>
+                <svg className="absolute left-0 bottom-0 w-64 h-64 text-[#4DA768]/5 transform rotate-180" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59L21 7Z" />
+                </svg>
+              </div>
               <div className="absolute inset-0 bg-gradient-to-r from-[#4DA768]/10 to-[#3d8953]/10 transform -skew-y-3 rounded-3xl"></div>
               <div className="relative bg-white p-8 md:p-12 rounded-2xl shadow-lg border-2 border-[#4DA768]/20">
                 <h2 className="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#4DA768] to-[#3d8953]">
@@ -277,8 +288,8 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
               <p className="text-xl mb-8">

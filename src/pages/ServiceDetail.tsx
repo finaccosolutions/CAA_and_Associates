@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { services } from '../data/services';
@@ -11,13 +11,17 @@ export default function ServiceDetail() {
   const service = services.find(s => s.id === id);
   const [showEnquiry, setShowEnquiry] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (!service) {
     navigate('/services');
     return null;
   }
 
   return (
-    <div className="pt-16">
+    <div className="pt-16 scroll-mt-16">
       {/* Hero Section */}
       <section className="relative h-[60vh]">
         <div className="absolute inset-0">

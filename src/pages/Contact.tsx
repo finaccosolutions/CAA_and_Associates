@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
 
 export default function Contact() {
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    // Simulate form submission
+    setTimeout(() => {
+      setFormStatus('success');
+      setTimeout(() => setFormStatus('idle'), 3000);
+    }, 1000);
+  };
+
   return (
-    <div className="pt-16 bg-green-50">
+    <div className="pt-16 bg-gradient-to-b from-green-50 to-white">
       {/* Hero Section */}
       <section className="bg-[#4DA768] text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,7 +47,13 @@ export default function Contact() {
       </section>
 
       {/* Contact Content */}
-      <section className="py-20">
+      <section className="py-20 relative overflow-hidden">
+        {/* Background Decorations */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-[#4DA768]/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#4DA768]/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -36,10 +61,11 @@ export default function Contact() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="bg-white p-8 rounded-xl shadow-lg"
+              className="bg-white p-8 rounded-xl shadow-xl relative overflow-hidden"
             >
-              <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
-              <form className="space-y-6">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#4DA768]/5 rounded-bl-full"></div>
+              <h2 className="text-2xl font-bold mb-6 text-gray-800">Send us a Message</h2>
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="group">
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Name
@@ -47,20 +73,42 @@ export default function Contact() {
                   <input
                     type="text"
                     id="name"
-                    name="name"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4DA768] focus:ring focus:ring-[#4DA768] focus:ring-opacity-50 transition-all duration-300 transform group-hover:scale-[1.01]"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#4DA768] focus:ring focus:ring-[#4DA768]/20 transition-all duration-300"
+                    placeholder="Your name"
+                    required
                   />
                 </div>
-                <div className="group">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4DA768] focus:ring focus:ring-[#4DA768] focus:ring-opacity-50 transition-all duration-300 transform group-hover:scale-[1.01]"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="group">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#4DA768] focus:ring focus:ring-[#4DA768]/20 transition-all duration-300"
+                      placeholder="your@email.com"
+                      required
+                    />
+                  </div>
+                  <div className="group">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#4DA768] focus:ring focus:ring-[#4DA768]/20 transition-all duration-300"
+                      placeholder="Your phone number"
+                      required
+                    />
+                  </div>
                 </div>
                 <div className="group">
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
@@ -68,17 +116,38 @@ export default function Contact() {
                   </label>
                   <textarea
                     id="message"
-                    name="message"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={4}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#4DA768] focus:ring focus:ring-[#4DA768] focus:ring-opacity-50 transition-all duration-300 transform group-hover:scale-[1.01]"
+                    className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-[#4DA768] focus:ring focus:ring-[#4DA768]/20 transition-all duration-300"
+                    placeholder="How can we help you?"
+                    required
                   ></textarea>
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#4DA768] text-white px-6 py-3 rounded-md hover:bg-[#3d8953] transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center space-x-2"
+                  disabled={formStatus !== 'idle'}
+                  className={`w-full py-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all duration-300 ${
+                    formStatus === 'idle'
+                      ? 'bg-[#4DA768] hover:bg-[#3d8953] text-white'
+                      : formStatus === 'success'
+                      ? 'bg-green-500 text-white'
+                      : 'bg-gray-400 text-white'
+                  }`}
                 >
-                  <span>Send Message</span>
-                  <Send size={18} />
+                  {formStatus === 'idle' && (
+                    <>
+                      <span>Send Message</span>
+                      <Send size={18} />
+                    </>
+                  )}
+                  {formStatus === 'sending' && <span>Sending...</span>}
+                  {formStatus === 'success' && (
+                    <>
+                      <span>Message Sent!</span>
+                      <CheckCircle size={18} />
+                    </>
+                  )}
                 </button>
               </form>
             </motion.div>
@@ -90,14 +159,15 @@ export default function Contact() {
               transition={{ duration: 0.8 }}
               className="space-y-8"
             >
-              <div className="bg-white p-8 rounded-xl shadow-lg mb-8">
-                <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
+              <div className="bg-white p-8 rounded-xl shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-32 h-32 bg-[#4DA768]/5 rounded-br-full"></div>
+                <h2 className="text-2xl font-bold mb-6 text-gray-800">Contact Information</h2>
                 <div className="space-y-6">
-                  <div className="flex items-start group hover:transform hover:translate-x-2 transition-all duration-300">
-                    <div className="bg-[#4DA768]/10 p-3 rounded-full">
+                  <div className="flex items-start space-x-4 group hover:translate-x-2 transition-all duration-300">
+                    <div className="bg-[#4DA768] bg-opacity-10 p-3 rounded-lg">
                       <MapPin className="text-[#4DA768] h-6 w-6" />
                     </div>
-                    <div className="ml-4">
+                    <div>
                       <h3 className="font-semibold text-gray-900">Address</h3>
                       <p className="text-gray-600">
                         IInd FLOOR, MALABAR ARCADE<br />
@@ -106,20 +176,20 @@ export default function Contact() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-start group hover:transform hover:translate-x-2 transition-all duration-300">
-                    <div className="bg-[#4DA768]/10 p-3 rounded-full">
+                  <div className="flex items-start space-x-4 group hover:translate-x-2 transition-all duration-300">
+                    <div className="bg-[#4DA768] bg-opacity-10 p-3 rounded-lg">
                       <Phone className="text-[#4DA768] h-6 w-6" />
                     </div>
-                    <div className="ml-4">
+                    <div>
                       <h3 className="font-semibold text-gray-900">Phone</h3>
                       <p className="text-gray-600">+91 9495143671</p>
                     </div>
                   </div>
-                  <div className="flex items-start group hover:transform hover:translate-x-2 transition-all duration-300">
-                    <div className="bg-[#4DA768]/10 p-3 rounded-full">
+                  <div className="flex items-start space-x-4 group hover:translate-x-2 transition-all duration-300">
+                    <div className="bg-[#4DA768] bg-opacity-10 p-3 rounded-lg">
                       <Mail className="text-[#4DA768] h-6 w-6" />
                     </div>
-                    <div className="ml-4">
+                    <div>
                       <h3 className="font-semibold text-gray-900">Email</h3>
                       <p className="text-gray-600">info@caaassociates.com</p>
                     </div>
@@ -128,23 +198,24 @@ export default function Contact() {
               </div>
 
               {/* Business Hours */}
-              <div className="bg-white p-8 rounded-xl shadow-lg">
-                <h3 className="text-xl font-semibold mb-6">Business Hours</h3>
+              <div className="bg-white p-8 rounded-xl shadow-xl relative overflow-hidden">
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-[#4DA768]/5 rounded-tl-full"></div>
+                <h3 className="text-xl font-semibold mb-6 text-gray-800">Business Hours</h3>
                 <div className="space-y-4">
-                  <div className="flex items-center group hover:transform hover:translate-x-2 transition-all duration-300">
-                    <div className="bg-[#4DA768]/10 p-3 rounded-full">
+                  <div className="flex items-start space-x-4 group hover:translate-x-2 transition-all duration-300">
+                    <div className="bg-[#4DA768] bg-opacity-10 p-3 rounded-lg">
                       <Clock className="text-[#4DA768] h-6 w-6" />
                     </div>
-                    <div className="ml-4">
+                    <div>
                       <p className="font-semibold text-gray-900">Monday - Saturday</p>
                       <p className="text-gray-600">9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
-                  <div className="flex items-center group hover:transform hover:translate-x-2 transition-all duration-300">
-                    <div className="bg-[#4DA768]/10 p-3 rounded-full">
+                  <div className="flex items-start space-x-4 group hover:translate-x-2 transition-all duration-300">
+                    <div className="bg-[#4DA768] bg-opacity-10 p-3 rounded-lg">
                       <Clock className="text-[#4DA768] h-6 w-6" />
                     </div>
-                    <div className="ml-4">
+                    <div>
                       <p className="font-semibold text-gray-900">Sunday</p>
                       <p className="text-gray-600">Closed</p>
                     </div>

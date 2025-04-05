@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { services } from '../data/services';
 import { MessageCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Services() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const openWhatsApp = (service: string) => {
-    const message = `Hi, I'm interested in your ${service} service. Can you provide more information?`;
+    const message = `Hello! I'm interested in your ${service} service. I would like to know more about your professional services and how you can help my business grow. Could you please provide more details about your expertise and pricing?`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/+919495143671?text=${encodedMessage}`, '_blank');
   };
 
   return (
-    <div className="pt-16 bg-green-50">
+    <div className="pt-16 bg-green-50 scroll-mt-16">
       {/* Hero Section */}
       <section className="bg-gray-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
