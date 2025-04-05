@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { services } from '../data/services';
-import { ArrowRight, ChevronDown, Users, CheckCircle, Award, Building, Briefcase, BarChart3, PieChart, Calculator, BookOpen } from 'lucide-react';
+import { ArrowRight, ChevronDown, Users, CheckCircle, Award, Building, Briefcase, MessageCircle, CheckCircle2 } from 'lucide-react';
 
 export default function Home() {
   const scrollToServices = () => {
@@ -36,6 +36,12 @@ export default function Home() {
       color: "from-orange-500/20 to-orange-600/20"
     },
   ];
+
+  const openWhatsApp = (service: string) => {
+    const message = `Hi, I'm interested in your ${service} service. Can you provide more information?`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/+919495143671?text=${encodedMessage}`, '_blank');
+  };
 
   return (
     <div className="relative">
@@ -78,12 +84,12 @@ export default function Home() {
             >
               Get Started
             </Link>
-            <Link
-              to="/services"
+            <button
+              onClick={scrollToServices}
               className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300 inline-block"
             >
-              Explore Services
-            </Link>
+              Our Services
+            </button>
           </motion.div>
         </div>
         <motion.button
@@ -126,8 +132,8 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
+      <section id="services" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -159,7 +165,7 @@ export default function Home() {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
@@ -167,30 +173,62 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500"
               >
-                <div className="h-48 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="text-3xl mb-3 transform group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#4DA768] transition-colors duration-300 relative">
-                    {service.title}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#4DA768] transition-all duration-300 group-hover:w-full"></span>
-                  </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">
-                    {service.description}
-                  </p>
-                  <Link
-                    to={`/services/${service.id}`}
-                    className="inline-flex items-center text-[#4DA768] group-hover:text-[#3d8953] transition-colors duration-300"
-                  >
-                    Learn More <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-2 transition-transform duration-300" />
-                  </Link>
+                <div className="flex flex-col md:flex-row h-full">
+                  {/* Image Section */}
+                  <div className="md:w-2/5 relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10"></div>
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full">
+                      <span className="text-3xl">{service.icon}</span>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="md:w-3/5 p-6 flex flex-col">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#4DA768] transition-colors duration-300">
+                      {service.title}
+                    </h2>
+                    <p className="text-gray-600 mb-6">
+                      {service.description}
+                    </p>
+
+                    {/* Service-specific features */}
+                    <div className="flex-grow">
+                      <h3 className="font-semibold text-gray-900 mb-3">Key Offerings:</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {getServiceFeatures(service.id).map((feature, idx) => (
+                          <div key={idx} className="flex items-center text-gray-700">
+                            <CheckCircle2 className="w-4 h-4 text-[#4DA768] mr-2 flex-shrink-0" />
+                            <span className="text-sm">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-4 mt-6">
+                      <Link
+                        to={`/services/${service.id}`}
+                        className="flex-1 bg-[#4DA768] text-white px-4 py-3 rounded-lg hover:bg-[#3d8953] transition-all duration-300 flex items-center justify-center group/btn"
+                      >
+                        Learn More
+                        <ArrowRight size={16} className="ml-2 transform group-hover/btn:translate-x-1 transition-transform" />
+                      </Link>
+                      <button
+                        onClick={() => openWhatsApp(service.title)}
+                        className="flex-1 border-2 border-[#25D366] text-[#25D366] px-4 py-3 rounded-lg hover:bg-[#25D366] hover:text-white transition-all duration-300 flex items-center justify-center group/btn"
+                      >
+                        Enquire
+                        <MessageCircle size={16} className="ml-2 transform group-hover/btn:scale-110 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -261,11 +299,108 @@ export default function Home() {
               to="/contact"
               className="inline-flex items-center bg-white text-[#4DA768] px-8 py-4 rounded-full font-semibold hover:bg-green-50 transition-all duration-300 hover:shadow-lg"
             >
-              Contact Us <ArrowRight size={16} className="ml-2" />
+              Contact Us <ArrowRight className="ml-2" />
             </Link>
           </motion.div>
         </div>
       </section>
     </div>
   );
+}
+
+// Service-specific features
+function getServiceFeatures(serviceId: string): string[] {
+  const features: Record<string, string[]> = {
+    'gst-services': [
+      'GST Registration',
+      'Monthly Returns Filing',
+      'GST Audit Support',
+      'Input Tax Credit',
+    ],
+    'income-tax-services': [
+      'Tax Planning',
+      'Return Filing',
+      'Tax Audit',
+      'Assessment Support',
+    ],
+    'business-setup': [
+      'Company Registration',
+      'License Applications',
+      'Compliance Setup',
+      'Business Planning',
+    ],
+    'corporate-compliance': [
+      'Annual Compliance',
+      'Regulatory Filings',
+      'Legal Documentation',
+      'Advisory Services',
+    ],
+    'cost-management': [
+      'Cost Analysis',
+      'Budget Planning',
+      'Efficiency Optimization',
+      'Financial Strategy',
+    ],
+    'audit-certification': [
+      'Statutory Audit',
+      'Internal Audit',
+      'Compliance Audit',
+      'Special Purpose Audit',
+    ],
+    'registration-compliances': [
+      'Business Registration',
+      'License Management',
+      'Renewal Services',
+      'Compliance Tracking',
+    ],
+    'accounting-bookkeeping': [
+      'Financial Statements',
+      'Account Reconciliation',
+      'Payroll Processing',
+      'MIS Reports',
+    ],
+    'drafting-documentation': [
+      'Legal Documents',
+      'Agreements',
+      'Contracts',
+      'Policy Documents',
+    ],
+    'management-consultancy': [
+      'Business Strategy',
+      'Process Improvement',
+      'Risk Management',
+      'Growth Planning',
+    ],
+    'hr-services': [
+      'Recruitment',
+      'HR Policy Development',
+      'Performance Management',
+      'Training Programs',
+    ],
+    'statutory-compliances': [
+      'Regulatory Compliance',
+      'Statutory Filings',
+      'Due Diligence',
+      'Compliance Audit',
+    ],
+    'fema-rbi': [
+      'FEMA Compliance',
+      'RBI Reporting',
+      'Foreign Investment',
+      'Exchange Control',
+    ],
+    'virtual-accounting': [
+      'Cloud Accounting',
+      'Remote Bookkeeping',
+      'Digital Documentation',
+      'Real-time Reporting',
+    ],
+  };
+
+  return features[serviceId] || [
+    'Professional Guidance',
+    'Customized Solutions',
+    'Regular Updates',
+    'Dedicated Support',
+  ];
 }

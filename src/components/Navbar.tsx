@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NavItem } from '../types';
-import { Menu, X, Calculator, BookOpen, Building2 } from 'lucide-react';
+import { Menu, X, Calculator, Building2 } from 'lucide-react';
 
 const navItems: NavItem[] = [
   { title: 'Home', href: '/' },
   { title: 'About Us', href: '/about' },
-  { title: 'Services', href: '/services' },
   { title: 'Gallery', href: '/gallery' },
   { title: 'Contact Us', href: '/contact' },
 ];
