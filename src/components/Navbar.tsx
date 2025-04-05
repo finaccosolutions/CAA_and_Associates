@@ -6,6 +6,7 @@ import { Menu, X, Calculator, Building2 } from 'lucide-react';
 const navItems: NavItem[] = [
   { title: 'Home', href: '/' },
   { title: 'About Us', href: '/about' },
+  { title: 'Services', href: '/#services' },
   { title: 'Gallery', href: '/gallery' },
   { title: 'Contact Us', href: '/contact' },
 ];
@@ -13,6 +14,14 @@ const navItems: NavItem[] = [
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+
+  const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <nav className="fixed w-full z-50 bg-gray-900">
@@ -25,7 +34,7 @@ export default function Navbar() {
                 <Calculator className="h-4 w-4 text-white absolute -bottom-1 -right-1" />
               </div>
               <span className="text-2xl font-bold text-white font-serif">
-                CA A & Associates
+                C A A & Associates
               </span>
             </Link>
           </div>
@@ -36,6 +45,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 to={item.href}
+                onClick={item.href === '/#services' ? handleServiceClick : undefined}
                 className={`text-white relative group px-2 py-1 font-serif ${
                   location.pathname === item.href 
                     ? 'text-[#4DA768]' 
@@ -69,12 +79,17 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   to={item.href}
+                  onClick={(e) => {
+                    if (item.href === '/#services') {
+                      handleServiceClick(e);
+                    }
+                    setIsMobileMenuOpen(false);
+                  }}
                   className={`block px-3 py-2 rounded-md font-serif ${
                     location.pathname === item.href
                       ? 'bg-[#4DA768] text-white'
                       : 'text-white hover:bg-gray-700'
                   }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.title}
                 </Link>

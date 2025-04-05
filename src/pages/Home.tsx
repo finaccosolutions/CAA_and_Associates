@@ -43,6 +43,28 @@ export default function Home() {
     window.open(`https://wa.me/+919495143671?text=${encodedMessage}`, '_blank');
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const serviceVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <div className="relative">
       {/* Hero Section */}
@@ -52,6 +74,7 @@ export default function Home() {
             src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80"
             alt="Hero background"
             className="w-full h-full object-cover"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#4DA768]/95 to-[#3d8953]/95"></div>
         </div>
@@ -114,7 +137,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-100px" }}
                 className="relative group"
               >
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${stat.color} transform group-hover:scale-105 transition-transform duration-300`}></div>
@@ -139,7 +162,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               className="inline-flex items-center bg-[#4DA768]/10 px-4 py-2 rounded-full text-[#4DA768] font-medium mb-4"
             >
               <Briefcase className="w-5 h-5 mr-2" />
@@ -150,7 +173,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
             >
               Comprehensive Business Solutions
             </motion.h2>
@@ -159,32 +182,36 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
             >
               Tailored financial services to drive your business forward
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <motion.div 
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500"
+                variants={serviceVariants}
+                className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
               >
                 <div className="flex flex-col md:flex-row h-full">
                   {/* Image Section */}
-                  <div className="md:w-2/5 relative">
+                  <div className="md:w-2/5 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10"></div>
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                      loading="lazy"
                     />
-                    <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full">
+                    <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full transform group-hover:rotate-12 transition-transform duration-300">
                       <span className="text-3xl">{service.icon}</span>
                     </div>
                   </div>
@@ -203,7 +230,10 @@ export default function Home() {
                       <h3 className="font-semibold text-gray-900 mb-3">Key Offerings:</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {getServiceFeatures(service.id).map((feature, idx) => (
-                          <div key={idx} className="flex items-center text-gray-700">
+                          <div 
+                            key={idx} 
+                            className="flex items-center text-gray-700 transform hover:translate-x-2 transition-transform duration-300"
+                          >
                             <CheckCircle2 className="w-4 h-4 text-[#4DA768] mr-2 flex-shrink-0" />
                             <span className="text-sm">{feature}</span>
                           </div>
@@ -215,14 +245,14 @@ export default function Home() {
                     <div className="flex gap-4 mt-6">
                       <Link
                         to={`/services/${service.id}`}
-                        className="flex-1 bg-[#4DA768] text-white px-4 py-3 rounded-lg hover:bg-[#3d8953] transition-all duration-300 flex items-center justify-center group/btn"
+                        className="flex-1 bg-[#4DA768] text-white px-4 py-3 rounded-lg hover:bg-[#3d8953] transition-all duration-300 flex items-center justify-center group/btn transform hover:scale-105"
                       >
                         Learn More
                         <ArrowRight size={16} className="ml-2 transform group-hover/btn:translate-x-1 transition-transform" />
                       </Link>
                       <button
                         onClick={() => openWhatsApp(service.title)}
-                        className="flex-1 border-2 border-[#25D366] text-[#25D366] px-4 py-3 rounded-lg hover:bg-[#25D366] hover:text-white transition-all duration-300 flex items-center justify-center group/btn"
+                        className="flex-1 border-2 border-[#25D366] text-[#25D366] px-4 py-3 rounded-lg hover:bg-[#25D366] hover:text-white transition-all duration-300 flex items-center justify-center group/btn transform hover:scale-105"
                       >
                         Enquire
                         <MessageCircle size={16} className="ml-2 transform group-hover/btn:scale-110 transition-transform" />
@@ -232,7 +262,7 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -251,7 +281,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             className="relative"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#4DA768]/10 to-[#3d8953]/10 transform -skew-y-3 rounded-3xl"></div>
@@ -261,7 +291,7 @@ export default function Home() {
               </h2>
               <div className="space-y-6 text-gray-600">
                 <p className="text-lg leading-relaxed">
-                  CA Anwarsha Ali C is a distinguished Chartered Accountant with over 15 years of experience
+                  CA Anwarsha Ali C is a distinguished Chartered Accountant with over 10 years of experience
                   in providing comprehensive financial services. His expertise spans across taxation,
                   auditing, financial planning, and business advisory services.
                 </p>
@@ -289,7 +319,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
             <p className="text-xl mb-8">
@@ -297,7 +327,7 @@ export default function Home() {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center bg-white text-[#4DA768] px-8 py-4 rounded-full font-semibold hover:bg-green-50 transition-all duration-300 hover:shadow-lg"
+              className="inline-flex items-center bg-white text-[#4DA768] px-8 py-4 rounded-full font-semibold hover:bg-green-50 transition-all duration-300 hover:shadow-lg transform hover:scale-105"
             >
               Contact Us <ArrowRight className="ml-2" />
             </Link>

@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-2xl font-bold mb-6">CA A & Associates</h3>
+            <h3 className="text-2xl font-bold mb-6">C A A & Associates</h3>
             <p className="text-gray-400 mb-6">
               Professional chartered accountancy services led by CA Anwarsha Ali C.
             </p>
@@ -29,7 +29,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center">
                 <Mail className="text-[#4DA768] mr-3 h-5 w-5" />
-                <p className="text-gray-400">caaassociatesca@gmail.com</p>
+                <p className="text-gray-400">info@caaassociates.com</p>
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="text-center">
             <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} CA A & Associates. All rights reserved.
+              © {new Date().getFullYear()} C A A & Associates. All rights reserved.
             </p>
           </div>
         </div>

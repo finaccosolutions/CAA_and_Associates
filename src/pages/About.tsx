@@ -38,7 +38,7 @@ export default function About() {
             >
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-gray-600 mb-6">
-                CA A & Associates was founded with a vision to provide comprehensive financial
+                C A A & Associates was founded with a vision to provide comprehensive financial
                 and business advisory services to clients across various sectors. Led by
                 CA Anwarsha Ali C, our firm has established itself as a trusted partner for
                 businesses seeking expert guidance in financial matters.

@@ -121,7 +121,7 @@ export default function Contact() {
                     </div>
                     <div className="ml-4">
                       <h3 className="font-semibold text-gray-900">Email</h3>
-                      <p className="text-gray-600">caaassociatesca@gmail.com</p>
+                      <p className="text-gray-600">info@caaassociates.com</p>
                     </div>
                   </div>
                 </div>
